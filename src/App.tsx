@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import AddTodo from './components/AddTodo';
+import ListTodos from './components/ListTodos';
+import UpdateTodo from './components/UpdateTodo';
+import { Todo } from './API';
+import { Toaster } from 'react-hot-toast';
 
-function App() {
+const AppContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
+  margin: 0 50px;
+`;
+
+const App = () => {
+  const [selectedTodo, setSelectedTodo] = useState<undefined | Todo>(undefined);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppContainer>
+      <Toaster
+        position="bottom-left"
+      />
+      <ListTodos setSelectedTodo={setSelectedTodo} />
+      <AddTodo />
+      {selectedTodo && <UpdateTodo todo={selectedTodo} />}
+    </AppContainer>
   );
-}
+};
 
 export default App;
